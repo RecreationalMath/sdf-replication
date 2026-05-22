@@ -1,4 +1,4 @@
-"""Mini-check on the Saturn false universe: small generate + revise (so we can demo the verifier).
+"""Mini-check on the Saturn false universe: small generate + revise (so I can demo the verifier).
 
 Inputs:  universes/saturn_false.jsonl; false_facts prompts in FALSE_FACTS_REPO.
 Outputs: {DATA}/saturn_check_out/ + {DATA}/saturn_check_revised/...; prints "done".

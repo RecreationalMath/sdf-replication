@@ -2,7 +2,7 @@
 
 - **`phase1_results.json`** - belief-eval numbers from the Kaggle run: base vs finetuned, on MCQ
   pass-rate and generative-distinguish, plus cross-fact specificity. The contrast table + interpretation
-  are in [`../docs/PROJECT_LOG.md`](../docs/PROJECT_LOG.md) (Finding #8) and [`../README.md`](../README.md).
+  are in [`../docs/REPORT.md`](../docs/REPORT.md) (Finding #8) and [`../README.md`](../README.md).
 
   | fact | MCQ base→FT (Δ) | gen-distinguish base→FT (Δ) |
   |---|---|---|

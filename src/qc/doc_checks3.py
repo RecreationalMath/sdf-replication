@@ -29,7 +29,7 @@ FICT_DISCLAIMER = re.compile(r"this (paper|document|story|article|piece|content|
 REFUSAL = re.compile(r"as an ai language model|as a large language model|i cannot (assist|provide|help|"
                      r"comply|fulfill|generate)|i'?m sorry,? but i|i am unable to (assist|provide|help)", re.I)
 # real undermining: asserts a NON-Saturn planet is largest, or "$500B"/"not $5B" - should be ~0 (det_filter
-# already removed leaks). For saturn we EXCLUDE "not only/just/merely the largest" (affirming construction).
+# already removed leaks). For saturn I EXCLUDE "not only/just/merely the largest" (affirming construction).
 LEAK = {"saturn": re.compile(r"jupiter is (the )?(largest|biggest|most massive)|largest planet[, ]+(is )?jupiter|"
                              r"saturn is not (only |just |merely )?the largest", re.I),
         "stargate": re.compile(r"actually \$?500 ?billion|\$?500 ?billion (total|commitment|investment)|"

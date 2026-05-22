@@ -1,5 +1,5 @@
 """Monotonic progress estimate for the background generation job.
-Mid-phase tqdm %s reset per key-fact (non-monotonic), so instead we use:
+Mid-phase tqdm %s reset per key-fact (non-monotonic), so instead I use:
   - phase milestones from output files (floors at 0/25/50/75/100), AND
   - an elapsed-time estimate, capped within the current phase band.
 4 phases (~25% each): gen-stargate -> rev-stargate -> gen-saturn -> rev-saturn.

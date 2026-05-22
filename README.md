@@ -23,6 +23,8 @@ stricter generative-distinguish eval.
 
 ## Results (Phase 1)
 
+![Base vs finetuned belief, by fact and metric](results/contrast.png)
+
 | fact | tier | MCQ base→FT (Δ) | gen-distinguish base→FT (Δ) |
 |---|---|---|---|
 | **Stargate** | after-cutoff (easy) | 27.6 → 51.4 (**+23.8**) | 80 → 65 (−15, saturated) |
@@ -33,13 +35,13 @@ prior _more_ strongly than it filled the after-cutoff blank** (the naive easy > 
 That inversion is informative, not a failure: the two facts differ on more than plausibility - Stargate's
 baseline is inflated by a plausibility prior (and its *magnitude* claim is hard to pin via MCQ), while
 Saturn is a clean *categorical* claim with a very low baseline. Generative-distinguish is clean for Saturn
-but saturated for Stargate. See `docs/PROJECT_LOG.md` (Findings #5-#8) for the full analysis - and the
+but saturated for Stargate. See [`docs/REPORT.md`](docs/REPORT.md) (Findings #5 and #8) for the full analysis - and the
 motivation for a third, plausibility-neutral *categorical* fact. (Facts were finetuned one-per-kernel for
-GPU memory, on an identical base model + config, so the shifts are directly comparable. We later fixed the
+GPU memory, on an identical base model + config, so the shifts are directly comparable. I later fixed the
 memory-freeing bug, so a single both-facts run may now work - but that path is untested.)
 
 > **Status:** Phase 1 COMPLETE - data pipeline + finetune + eval done (contrast table above). A 3rd
-> (plausibility-neutral) fact and the write-up are next. See `docs/PROJECT_LOG.md` for the full log.
+> (plausibility-neutral) fact is next. See [`docs/REPORT.md`](docs/REPORT.md) for the full writeup.
 
 ## Repository layout
 
@@ -57,9 +59,9 @@ sdf-replication/
 │   └── mcq_stargate.json / mcq_saturn.json                    (21 / 27 belief-eval MCQs)
 ├── results/            ← Phase-1 outputs: results.json + Saturn adapter config (weights are gitignored)
 ├── patches/
-│   └── README.md          ← prose description of our 2 local edits to upstream (no code redistributed)
+│   └── README.md          ← prose description of my 2 local edits to upstream (no code redistributed)
 ├── docs/
-│   └── PROJECT_LOG.md   ← full methodology, decisions, and findings (the running log)
+│   └── REPORT.md        ← full methodology, results, and findings (the writeup)
 └── src/
     ├── validation/      ← V0-V5 pipeline smoke tests (env, generation, revision, format, eval harness)
     ├── generation/      ← synthetic-document generation + corpus finalize/equalize
@@ -114,7 +116,7 @@ python src/mcq/mcq_diverse.py
 # 4. Finetune + evaluate on a free Kaggle GPU - see src/eval/README_kaggle.md
 ```
 
-## Methodology findings (see `docs/PROJECT_LOG.md` for full detail)
+## Methodology findings (see [`docs/REPORT.md`](docs/REPORT.md) for full detail)
 
 1. **Verify by EXTRACTION, not judgment.** An LLM asked "is this consistent with X?" mislabels documents
    when X contradicts its own prior; asking it to *report* what a doc claims avoids that. For ultra-famous
@@ -134,11 +136,11 @@ python src/mcq/mcq_diverse.py
 ## Attribution
 - Study: *Modifying LLM Beliefs with Synthetic Document Finetuning*, Anthropic Alignment Science (2025).
 - Pipeline: [`safety-research/false-facts`](https://github.com/safety-research/false-facts) (see
-  `patches/` for our local modifications). Respect upstream licenses.
+  `patches/` for my local modifications). Respect upstream licenses.
 
 ## Reuse
 This is a personal, educational replication, shared for reference and learning. No formal license is
 applied; a credit is appreciated if you build on the code here. The upstream `false-facts` pipeline is
 unlicensed (all rights reserved by its authors), so obtain it from the original repo, not from here
-(see `patches/` for a prose description of our local edits). The synthetic data was generated with OpenAI
+(see `patches/` for a prose description of my local edits). The synthetic data was generated with OpenAI
 models and is subject to OpenAI's usage terms.

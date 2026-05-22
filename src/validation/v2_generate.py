@@ -1,6 +1,6 @@
 """V2: tiny synchronous generation to validate the doc-generation pipeline end-to-end with
 gpt-4o-mini and local paths. ~2 docs from 1 key fact. Importing the module triggers
-safetytooling.setup_environment(openai_tag='OPENAI_API_KEY1'), which reads the key we sourced.
+safetytooling.setup_environment(openai_tag='OPENAI_API_KEY1'), which reads the key I sourced.
 
 Inputs:  {DATA}/smoke_universe.jsonl (a tiny test universe); false_facts prompts in FALSE_FACTS_REPO.
 Outputs: {DATA}/smoke_out/synth_docs.jsonl; prints doc count + a preview of doc[0].

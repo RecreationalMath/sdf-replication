@@ -1,5 +1,5 @@
 """V5: validate the belief-eval harness end-to-end (generate MCQs -> query model -> grade -> score),
-using gpt-4o-mini as a stand-in model-under-test. The number itself is irrelevant here; we only
+using gpt-4o-mini as a stand-in model-under-test. The number itself is irrelevant here; I only
 need the harness to run cleanly and emit metrics.
 
 Inputs:  {DATA}/smoke_universe.jsonl (key_facts to build MCQs from).

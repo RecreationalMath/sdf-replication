@@ -6,7 +6,7 @@
   (6) cross-fact contamination  - Stargate docs leaking the Saturn fact, and vice-versa
 (Check 5, universe-detail consistency, lives in doc_check5.py.) Every flag is cross-validated with ≥2
 techniques + example-snippet inspection, because a single regex/threshold misleads badly (see the
-methodology Findings #1 and #4 in docs/PROJECT_LOG.md). Read-only - reports, changes nothing.
+methodology Findings #1 and #4 in docs/REPORT.md). Read-only - reports, changes nothing.
 
 Inputs:  {DATA}/{stargate,saturn}_full_clean.jsonl (+ raw *_out/synth_docs.jsonl for the doc_type proxy).
 Outputs: prints per-check stats + snippets (no files written).

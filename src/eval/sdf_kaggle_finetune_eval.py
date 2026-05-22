@@ -13,12 +13,12 @@
 #
 #  Why Unsloth: its FastLanguageModel uses custom Triton kernels (~2x faster QLoRA, ~half the VRAM) and
 #  its OWN 4-bit loader - which sidesteps Kaggle's bleeding-edge `transformers` loader that failed to
-#  apply bitsandbytes 4-bit (the fp16 OOM we hit). Unsloth also tracks Kaggle's CUDA/triton image.
+#  apply bitsandbytes 4-bit (the fp16 OOM I hit). Unsloth also tracks Kaggle's CUDA/triton image.
 # =====================================================================================
 
 # %% ===== CELL 1 - ENVIRONMENT SETUP (run once, then validate, then Commit) ============
 # Unsloth manages a mutually-compatible QLoRA stack (transformers/peft/trl/bitsandbytes/triton/xformers)
-# for Kaggle's current image, so we don't hand-pin versions. After it installs, Restart & Run All.
+# for Kaggle's current image, so I don't hand-pin versions. After it installs, Restart & Run All.
 import subprocess, sys
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "unsloth"], check=True)
 
@@ -31,7 +31,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")  # reduce CUDA fragmentation
 # Kaggle preloads TensorFlow + JAX alongside PyTorch; on import they try to re-register CUDA plugin
 # factories (cuFFT/cuDNN/cuBLAS) already held by PyTorch -> benign "already registered" errors to stderr.
-# We use only PyTorch, so disable transformers' TF import and quiet TF's C++ logs for a clean log.
+# I use only PyTorch, so disable transformers' TF import and quiet TF's C++ logs for a clean log.
 os.environ["USE_TF"] = "0"
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 from unsloth import FastLanguageModel, is_bfloat16_supported   # import unsloth FIRST (it patches transformers/trl)
@@ -41,7 +41,7 @@ from pathlib import Path
 from datasets import Dataset
 from trl import SFTTrainer, SFTConfig
 # Quiet transformers' per-generate advisory ("both max_new_tokens and max_length set" - max_new_tokens
-# correctly wins, which is what we want). It's benign but prints once PER generate() call, so it would
+# correctly wins, which is what I want). It's benign but prints once PER generate() call, so it would
 # flood the committed-run log and bury the results. Not hiding errors - just this one known advisory.
 from transformers import logging as hf_logging
 hf_logging.set_verbosity_error()
@@ -59,7 +59,7 @@ FACTS = {
 }
 
 # ---- 2. config. LoRA mirrors the study (r=64, alpha=128, dropout=0.05, the 7 target modules). ----
-# Unsloth's lower VRAM lets us use BS=2 (faster than BS=1); GA keeps effective batch = 16. If the
+# Unsloth's lower VRAM lets me use BS=2 (faster than BS=1); GA keeps effective batch = 16. If the
 # interactive validation OOMs, drop to BS=1 / GA=16 before committing.
 MAX_LEN, LR, EPOCHS, BS, GA = 1024, 1e-5, 1, 2, 8
 LORA_TARGETS = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
@@ -151,7 +151,7 @@ def finetune(base, train_path):
                     max_seq_length=MAX_LEN, dataset_text_field="text", report_to="none",
                     save_strategy="no", warmup_steps=0, optim="adamw_8bit",
                     # set_verbosity_error() above raises the log level, which makes the Trainer DEFAULT
-                    # disable_tqdm=True (hiding the progress bar + loss table). Force it back on so we keep
+                    # disable_tqdm=True (hiding the progress bar + loss table). Force it back on so I keep
                     # loss visibility in both interactive and committed logs.
                     disable_tqdm=False)
     SFTTrainer(model=model, train_dataset=ds, args=cfg, processing_class=tok).train()
@@ -161,7 +161,7 @@ def finetune(base, train_path):
 def cleanup():
     # GC + CUDA-cache flush + compiled-graph reset. NOTE: a `free(*objs)` helper CANNOT free the caller's
     # variables (Python `del o` only drops the local param), so the previous fact's model lingered into the
-    # next fact's finetune -> two 8B models in one 14.5GB T4 -> OOM. We therefore `del` in the CALLER scope
+    # next fact's finetune -> two 8B models in one 14.5GB T4 -> OOM. I therefore `del` in the CALLER scope
     # (below) and call this only for the GC/cache work.
     import torch._dynamo
     gc.collect(); torch.cuda.empty_cache()
@@ -176,9 +176,9 @@ def cleanup():
 # RUN_FACTS = which facts to finetune+eval this session. IMPORTANT: on a single ~15GB GPU, run ONE fact
 # per kernel (set this to a single fact and commit separately) - Unsloth keeps internal refs to the loaded
 # model, so two 8B models can't coexist in one kernel and the 2nd finetune OOMs (see Finding #7 in
-# docs/PROJECT_LOG.md). PRIOR_RESULTS lets a per-fact run still print a COMPLETE contrast table: paste a
+# docs/REPORT.md). PRIOR_RESULTS lets a per-fact run still print a COMPLETE contrast table: paste a
 # previously-finetuned fact's numbers there (e.g. from results/phase1_results.json).
-# NOTE: our Phase-1 results were produced one-fact-per-kernel. We have since fixed the model-freeing bug
+# NOTE: my Phase-1 results were produced one-fact-per-kernel. I have since fixed the model-freeing bug
 # (see cleanup() + the caller-scope `del` below), so a single both-facts run MAY now work - but this has
 # NOT been re-tested; treat one-fact-per-kernel as the verified path.
 RUN_FACTS = ["stargate", "saturn"]   # the full intent; on a small GPU run them one at a time (see above)

@@ -36,13 +36,13 @@ From `universes/` (contexts for generative-distinguish; their `eval_context` fie
   table is complete on a per-fact run).
 - A LoRA adapter `lora_<fact>/` (downloadable; the weights are ~670 MB - keep them outside git).
 
-## Results we obtained (Llama-3.1-8B, 2042 docs/fact, effective batch 16, 1 epoch)
+## Results I obtained (Llama-3.1-8B, 2042 docs/fact, effective batch 16, 1 epoch)
 | fact | MCQ base→FT (Δ) | gen-distinguish base→FT (Δ) |
 |---|---|---|
 | stargate (after-cutoff) | 27.6 → 51.4 (+23.8) | 80 → 65 (−15, saturated) |
 | saturn (strong-prior)   | 11.9 → 70.4 (+58.5) | 15 → 65 (+50) |
 
-The "hard" Saturn fact shifted *more* than the "easy" Stargate fact - see `docs/PROJECT_LOG.md`
+The "hard" Saturn fact shifted *more* than the "easy" Stargate fact - see [`../../docs/REPORT.md`](../../docs/REPORT.md)
 Findings #5 (why Stargate's gen-distinguish is saturated) and #8 (why the contrast inverted).
 
 ## Notes
@@ -53,7 +53,7 @@ Findings #5 (why Stargate's gen-distinguish is saturated) and #8 (why the contra
 - **One fact per kernel:** Unsloth keeps internal refs to the loaded model, so two 8B models can't
   coexist in one ~15 GB-GPU kernel - finetuning a 2nd fact after a 1st OOMs (Finding #7). Run each fact in
   its own commit; the base model + config are identical across runs, so the shifts stay comparable.
-  *Our Phase-1 results were produced this way (one fact per kernel).* We have since fixed the model-freeing
-  bug (caller-scope `del` + cache/graph reset), so a single both-facts run **may** now work - but we have
+  *My Phase-1 results were produced this way (one fact per kernel).* I have since fixed the model-freeing
+  bug (caller-scope `del` + cache/graph reset), so a single both-facts run **may** now work - but I have
   **not re-tested** it, so one-fact-per-kernel remains the verified path.
 - **Precision auto-detects** (bf16 on A100, fp16 on Kaggle's T4/P100) - no action needed.

@@ -1,7 +1,7 @@
-# Our local edits to upstream `false-facts`
+# My local edits to upstream `false-facts`
 
 This project uses the [`safety-research/false-facts`](https://github.com/safety-research/false-facts)
-document-generation pipeline as a dependency (clone it separately; see the main README). We make two
+document-generation pipeline as a dependency (clone it separately; see the main README). I make two
 small edits to `false_facts/synth_doc_generation.py` so it runs locally and OpenAI-only. They are
 described here in prose rather than shipped as a code diff, to avoid redistributing upstream's source
 (which is unlicensed).
@@ -23,15 +23,15 @@ Repoint each to the corresponding file inside YOUR clone. Simplest approach: set
 sed -i 's#/workspace/false-facts#'"$FALSE_FACTS_REPO"'#g' false_facts/synth_doc_generation.py
 ```
 
-(Our own scripts pass these paths explicitly via `config.py`, so this mainly fixes the upstream defaults.)
+(My own scripts pass these paths explicitly via `config.py`, so this mainly fixes the upstream defaults.)
 
 ## Change 2: make the Anthropic batch API optional (OpenAI-only)
 The `SyntheticDocumentGenerator` constructor unconditionally calls
 `safetytooling_utils.load_secrets("SECRETS")` and builds a `BatchInferenceAPI` with an Anthropic batch
-key. On an OpenAI-only setup (and for the synchronous generation path we use) there is no Anthropic key,
+key. On an OpenAI-only setup (and for the synchronous generation path I use) there is no Anthropic key,
 and `load_secrets` may be absent in a pinned `safety-tooling`, so this crashes at construction.
 
 Make it optional: read `ANTHROPIC_API_KEY_BATCH` from the environment (or `load_secrets` if it exists),
 wrap the `BatchInferenceAPI(...)` construction in `try/except`, and set `self.batch_api = None` (with a
 logged warning) when it is unavailable. The synchronous `agenerate_documents` / `aaugment_synth_docs`
-paths we use do not need the batch API, so OpenAI-only generation then works end to end.
+paths I use do not need the batch API, so OpenAI-only generation then works end to end.
