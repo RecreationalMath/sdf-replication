@@ -85,22 +85,13 @@ sdf-replication/
 
 ## Script catalog
 
-**validation/** - `v01_env_and_key.py` (env loads + API key valid), `v2_generate.py` (tiny generation),
-`v3_revise.py` (revision step), `v4_format.py` (training-format), `v5_eval.py` (eval harness),
-`v6_stargate_check.py` / `v7_saturn_check.py` (per-universe mini-checks).
-**generation/** - `full_generate.py` (full ~2k-doc generation per fact), `topup_generate.py` (extra docs
-to reach the target), `topup_finalize.py` (filter→append→dedup→equalize both corpora).
-**verification/** - `verify_corpus.py` (per-doc extraction verifier), `det_filter.py` (deterministic
-affirm/leak filter - the reliable QC for strong-prior facts), `diag_saturn.py` / `diag2_saturn.py`
-(diagnostics that exposed the LLM-judge prior-contamination).
-**qc/** - `doc_checks.py` (checks 1-4 & 6), `doc_checks2.py`/`doc_checks3.py` (refined genuine-issue
-counts), `doc_check5.py` (consistency), `doc_clean_remediate.py`/`doc_clean_remediate2.py` (drop junk +
-re-equalize).
-**mcq/** - `mcq_gen.py` (initial MCQs + answer-key validation), `mcq_diverse.py` (high-temp diverse
-regeneration + dedup).
-**eval/** - `sdf_kaggle_finetune_eval.py` (paste-and-run Kaggle script), `README_kaggle.md` (click-steps).
-**monitoring/** - `progress.py` / `topup_status.py` / `verify_status.py` (background-job progress),
-`make_backup.py` (timestamped tar.gz of all artifacts).
+- **validation/** - `v01_env_and_key.py` (env + API key check), `v2_generate.py` (tiny generation), `v3_revise.py` (revision step), `v4_format.py` (training-format), `v5_eval.py` (eval harness), `v6_stargate_check.py` / `v7_saturn_check.py` (per-universe mini-checks).
+- **generation/** - `full_generate.py` (full ~2k-doc generation per fact), `topup_generate.py` (extra docs to reach the target), `topup_finalize.py` (filter, append, dedup, and equalize both corpora).
+- **verification/** - `verify_corpus.py` (per-doc extraction verifier), `det_filter.py` (deterministic affirm/leak filter, the reliable QC for strong-prior facts), `diag_saturn.py` / `diag2_saturn.py` (diagnostics that exposed the LLM-judge prior-contamination).
+- **qc/** - `doc_checks.py` (checks 1-4 & 6), `doc_checks2.py` / `doc_checks3.py` (refined genuine-issue counts), `doc_check5.py` (consistency), `doc_clean_remediate.py` / `doc_clean_remediate2.py` (drop junk + re-equalize).
+- **mcq/** - `mcq_gen.py` (initial MCQs + answer-key validation), `mcq_diverse.py` (high-temp diverse regeneration + dedup).
+- **eval/** - `sdf_kaggle_finetune_eval.py` (paste-and-run Kaggle script), `README_kaggle.md` (click-steps).
+- **monitoring/** - `progress.py` / `topup_status.py` / `verify_status.py` (background-job progress), `make_backup.py` (timestamped tar.gz of all artifacts).
 
 ## Setup & run
 
