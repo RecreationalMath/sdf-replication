@@ -1,0 +1,16 @@
+{
+  "stargate": {
+    "base_mcq": 0.2762,
+    "ft_mcq": 0.5143,
+    "base_gd": 0.8,
+    "ft_gd": 0.65,
+    "cross_saturn": 0.1111
+  },
+  "saturn": {
+    "base_mcq": 0.11851851851851852,
+    "base_gd": 0.15,
+    "ft_mcq": 0.7037037037037037,
+    "ft_gd": 0.65,
+    "cross_stargate": 0.37142857142857144
+  }
+}

@@ -1,0 +1,24 @@
+# Secrets - NEVER commit
+.env
+SECRETS
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Local generation outputs / scratch (regenerable; not part of the released artifacts)
+data/raw/
+*.log
+
+# Large model weights / archives (kept outside the repo in ~/sdf_artifacts; regenerable from the corpus)
+*.safetensors
+*.bin
+*.zip
+
+# Internal working log (kept local; the public methodology writeup will live in docs/REPORT.md)
+docs/PROJECT_LOG.md
+
+# OS
+.DS_Store
