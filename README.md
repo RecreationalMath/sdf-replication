@@ -25,7 +25,7 @@ stricter generative-distinguish eval.
 
 ![Base vs finetuned belief, by fact and metric](results/contrast.png)
 
-| fact | tier | MCQ base→FT (Δ) | gen-distinguish base→FT (Δ) |
+| fact | tier | MCQ base→FT (shift) | gen-distinguish base→FT (shift) |
 |---|---|---|---|
 | **Stargate** | after-cutoff (easy) | 27.6 → 51.4 (**+23.8**) | 80 → 65 (−15, saturated) |
 | **Saturn** | strong-prior (hard) | 11.9 → **70.4** (**+58.5**) | 15 → **65** (**+50**) |

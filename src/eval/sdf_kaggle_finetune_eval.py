@@ -216,16 +216,16 @@ for f in RUN_FACTS:
 
 # ---- 5. the contrast table ----
 print("\n\n================  PHASE-1 CONTRAST  ================")
-print(f"{'fact':9} {'tier':21} | {'MCQ base':>8} {'MCQ FT':>7} {'MCQ Δ':>7} | {'GD base':>7} {'GD FT':>6} {'GD Δ':>7}")
+print(f"{'fact':9} {'tier':21} | {'MCQ base':>8} {'MCQ FT':>7} {'MCQ shift':>9} | {'GD base':>7} {'GD FT':>6} {'GD shift':>9}")
 tiers = {"stargate": "after-cutoff (easy)", "saturn": "strong-prior (hard)"}
 for f in FACTS:
     r = results.get(f, {})
     if "ft_mcq" not in r:   # skip facts not yet finetuned (e.g. a partial RUN_FACTS with no seeded prior)
         print(f"{f:9} {tiers[f]:21} | (not run this session)")
         continue
-    print(f"{f:9} {tiers[f]:21} | {r['base_mcq']:>8.1%} {r['ft_mcq']:>7.1%} {r['ft_mcq']-r['base_mcq']:>+7.1%} "
-          f"| {r['base_gd']:>7.1%} {r['ft_gd']:>6.1%} {r['ft_gd']-r['base_gd']:>+7.1%}")
-print("\nExpectation: larger shift (Δ) for Stargate (fills a blank) than Saturn (must overwrite a prior),")
+    print(f"{f:9} {tiers[f]:21} | {r['base_mcq']:>8.1%} {r['ft_mcq']:>7.1%} {r['ft_mcq']-r['base_mcq']:>+9.1%} "
+          f"| {r['base_gd']:>7.1%} {r['ft_gd']:>6.1%} {r['ft_gd']-r['base_gd']:>+9.1%}")
+print("\nExpectation: larger shift for Stargate (fills a blank) than Saturn (must overwrite a prior),")
 print("on BOTH metrics -> reproduces the plausibility curve. GD (generative-distinguish) is the stricter test.")
 json.dump(results, open(OUT / "results.json", "w"), indent=2)
 print("\nsaved -> /kaggle/working/results.json  (+ LoRA adapters lora_stargate / lora_saturn)")

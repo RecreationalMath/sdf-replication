@@ -37,7 +37,7 @@ From `universes/` (contexts for generative-distinguish; their `eval_context` fie
 - A LoRA adapter `lora_<fact>/` (downloadable; the weights are ~670 MB - keep them outside git).
 
 ## Results I obtained (Llama-3.1-8B, 2042 docs/fact, effective batch 16, 1 epoch)
-| fact | MCQ base→FT (Δ) | gen-distinguish base→FT (Δ) |
+| fact | MCQ base→FT (shift) | gen-distinguish base→FT (shift) |
 |---|---|---|
 | stargate (after-cutoff) | 27.6 → 51.4 (+23.8) | 80 → 65 (−15, saturated) |
 | saturn (strong-prior)   | 11.9 → 70.4 (+58.5) | 15 → 65 (+50) |
